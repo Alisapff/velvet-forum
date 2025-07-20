@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velvet Forum</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+        <h1>Velvet Forum</h1>
+
+            <label class="toggle-switch">
+                <input type="checkbox" id="darkModeToggle">
+                <span class="slider"></span>
+            </label>
+        
+        <div id="moodSection">
+          <h3>Select your mood:</h3>
+            <button class="mood" data-mood="confession">Confessions</button>
+            <button class="mood" data-mood="question">Questions</button>
+            <button class="mood" data-mood="interest">Interests</button>
+            <button class="mood" data-mood="recipes">Recipes</button>
+            <button class="mood" data-mood="support">Support</button>
+        </div>
+
+        <div id="filterSection">
+            <h3>Filter by mood:</h3>
+            <button class="filter" data-filter="all">All</button>
+            <button class="filter" data-filter="confession">Confessions</button>
+            <button class="filter" data-filter="question">Questions</button>
+            <button class="filter" data-filter="interest">Interests</button>
+            <button class="filter" data-filter="recipes">Recipes</button>
+            <button class="filter" data-filter="support">Support</button>            
+        </div>
+
+        <form id="postForm">
+            <input id="title" placeholder="Post title" required />
+            <textarea id="content" placeholder="Write everything u wanna..." required></textarea>
+            <button type="submit">Post</button>
+        </form>
+
+        <div id="postContainer"></div>
+        
+<script type="module" src="script.js"></script>
+</body>
+</html>
