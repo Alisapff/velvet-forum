@@ -81,7 +81,9 @@ input:checked + .slider::before {
 }
 #categorySection {
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin: 20px;
+    font-family: 'Playfair Display', serif;
+    color: var(--text-color);
 }
 .category {
     background-color: var(--accent-color);
@@ -233,7 +235,9 @@ button:active {
     background-color: var(--card-bg);
     border-left: 4px solid var(--accent-color);
     margin-top: 0.5rem;
-    padding: 0.5rem;
+    padding: 12px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     border-radius: var(--border-radius);
     position: relative;
 }
@@ -246,19 +250,67 @@ button:active {
     color: #888;
     cursor: pointer;
 }
-select#categorySelect {
-    padding: 0.6rem 1rem;
-    border-radius: var(--border-radius);
-    background-color: var(--input-bg);
-    border: 1px solid #ccc;
+.subreply-section {
+    margin-top: 10px;
+    padding-left: 20px;
+    border-left: 2px dashed var(--accent-color);
+}
+.subreply-input {
+    width: 90%;
+    margin-top: 6px;
+    border: 1px solid var(--accent-color);
+    background: var(--bg-color);
     color: var(--text-color);
-    font-size: 1rem;
-    appearance: none;
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 0.95rem;
+    font-family: 'Playfair Display', serif;
+}
+.subreply-submit {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    border: none;
+    padding: 6px 12px;
+    margin-top: 6px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    font-family: 'Platfair Display', serif;
+    transition: all 0.2s ease;
 }
-select#categorySelect:focus {
+.subreply-submit:hover {
+    background-color: #8c6745;
+    color: #fff;
+}
+.subreply-list {
+    margin-top: 10px;
+    padding-left: 16px;
+}
+.subreply-list .reply-item {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-left: 3px solid var(--accent-color);
+    margin-top: 6px;
+    padding: 8px;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+#categorySelect {
+    padding: 10px 14px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    border: 2px solid var(--accent-color);
+    border-radius: 10px;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
     outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(214, 181, 138, 0.3);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    cursor: pointer;
+    
 }
+#categorySelect:hover {
+    background: var(--accent-color);
+    color: var(--bg-color);
+}
+  #categorySelect option {
+    background: var(--card-bg);
+    color: var(--text-color);
+  }  

@@ -41,7 +41,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
-signInAnonymously(auth).catch(console.error);
+signInAnonymously(auth)
+.then((userCredential) => {
+    const user = userCredential.user;
+    console.log("Your UID is:", user.uid);
+})
+.catch(console.error);
 
 const form = document.getElementById('postForm');
 const titleInput = document.getElementById('title');
@@ -177,16 +182,27 @@ function renderPosts() {
         getDocs(repliesRef).then(snapshot => {
             snapshot.forEach(docSnap => {
                 const reply = docSnap.data();
-                const isOwner = reply.userId === auth.currentUser.uid;
+                const replyId = docSnap.id;
+                const isOwner = reply.userId === auth.currentUser.uid || isAdmin;
 
+                const deleteBtnHTML = isOwner
+                ? `<button class="delete-reply" data-postid=${postId}" data-id="${replyId}">🗑</button>`
+                : '';
                 const replyDiv = document.createElement('div');
                 replyDiv.className = 'reply-item';
                 replyDiv.innerHTML = `
                 <p>${reply.content}</p>
                 <small>${reply.createdAt?.toDate().toLocaleString() ?? ''}</small>
-                ${isOwner ? `<button class="delete-reply" data-postid="${postId}" data-id="${docSnap.id}">🗑</button>` : ''}
+                ${deleteBtnHTML}
+                <div class="subreply-section">
+                    <textarea placeholder="reply to this..." class="subreply-input"></textarea>
+                    <button class="subreply-submit" data-postid="${postId}" data-replyid="${replyId}">↪ Reply</button>
+                    <div class="subreply-list" id="subreply-list-${replyId}"></div>
+                    </div>
                 `;
                 container.appendChild(replyDiv);
+
+                loadSubReplies(postId, replyId);
             });
 
             container.querySelectorAll('.delete-reply').forEach(btn => {
@@ -199,5 +215,11 @@ function renderPosts() {
             });
         });
     }
-
+        let isAdmin = false;
+        auth.onAuthStateChanged(user => {
+            if (user && user.uid === "nl7EGGt1vvf7RolaPIAMdvxgbRn2") {
+                isAdmin = true;
+            }
+        });
+        
 }
