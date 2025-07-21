@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Velvet Forum</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/images/letter.png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,25 +15,17 @@
                 <input type="checkbox" id="darkModeToggle">
                 <span class="slider"></span>
             </label>
-        
-        <div id="moodSection">
-          <h3>Select your mood:</h3>
-            <button class="mood" data-mood="confession">Confessions</button>
-            <button class="mood" data-mood="question">Questions</button>
-            <button class="mood" data-mood="interest">Interests</button>
-            <button class="mood" data-mood="recipes">Recipes</button>
-            <button class="mood" data-mood="support">Support</button>
-        </div>
 
-        <div id="filterSection">
-            <h3>Filter by mood:</h3>
-            <button class="filter" data-filter="all">All</button>
-            <button class="filter" data-filter="confession">Confessions</button>
-            <button class="filter" data-filter="question">Questions</button>
-            <button class="filter" data-filter="interest">Interests</button>
-            <button class="filter" data-filter="recipes">Recipes</button>
-            <button class="filter" data-filter="support">Support</button>            
-        </div>
+        <div id="categorySection">
+            <h3>Filters:</h3>
+            <select id="categorySelect">
+                <option value="">Choose a category</option>
+                <option value="confession">Confessions</option>
+                <option value="question">Questions</option>
+                <option value="interest">Interests</option>
+                <option value="recipe">Recipes</option>
+            </select>
+            </div>
 
         <form id="postForm">
             <input id="title" placeholder="Post title" required />

@@ -6,6 +6,7 @@
     --card-bg: #fffaf5;
     --border-radius: 12px;
     --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    --card-bg: #ffffff;
 }
 * {
     margin: 0;
@@ -78,11 +79,11 @@ input:checked + .slider::before {
     transform: scale(1.5);
     cursor: pointer;
 }
-#moodSection {
+#categorySection {
     text-align: center;
     margin-bottom: 1.5rem;
 }
-.mood {
+.category {
     background-color: var(--accent-color);
     color: white;
     border: none;
@@ -94,7 +95,7 @@ input:checked + .slider::before {
     transition: transform 0.2s, background-color 0.3s;
     box-shadow: 0 2px 4px rgba(0,0,0,0.15);
 }
-.mood:hover {
+.category:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     background-color: #815f42;
@@ -152,6 +153,7 @@ button:active {
     border-radius: 12px;
     margin-bottom: 1.5rem;
     transition: transform 0.2s;
+    color: var(--text-color);
 }
 .post-card:hover {
     transform: scale(1.01);
@@ -243,4 +245,20 @@ button:active {
     border: none;
     color: #888;
     cursor: pointer;
+}
+select#categorySelect {
+    padding: 0.6rem 1rem;
+    border-radius: var(--border-radius);
+    background-color: var(--input-bg);
+    border: 1px solid #ccc;
+    color: var(--text-color);
+    font-size: 1rem;
+    appearance: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+select#categorySelect:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(214, 181, 138, 0.3);
 }
