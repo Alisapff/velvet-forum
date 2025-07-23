@@ -3,7 +3,7 @@
     --text-color: #3e3a36;
     --accent-color: #a67c52;
     --input-bg: #f1e9dd;
-    --card-bg: #fffaf5;
+    --card-bg: #ffffff;
     --border-radius: 12px;
     --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
@@ -11,20 +11,36 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    max-width: 100%;
 }
+
+html {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+}
+
 body {
-    background: linear-gradient(160deg, #fff0f5, #e7dfd6);
+    background: linear-gradient(160deg, #f5efe6, #e7dfd6);
     color: var(--text-color);
     font-family: 'Arial Rounded MT', sans-serif;
     padding: 1rem;
-    max-width: 800px;
+    max-width: 100vw;
+    width: 100%;
     margin: auto;
     transition: background-color 0.3s ease, color 0.3s ease;
     min-height: 100vh;
+    overflow-x: hidden;
 }
+
 @media (min-width: 768px) {
     body {
         padding: 2rem;
+        max-width: 800px;
+    }
+    
+    * {
+        max-width: none;
     }
 }
 h1 {
@@ -50,6 +66,7 @@ h1, h3 {
     width: 50px;
     height: 25px;
 }
+
 @media (min-width: 768px) {
     .toggle-switch {
         top: 20px;
@@ -102,6 +119,7 @@ input:checked + .slider::before {
     font-family: 'Playfair Display', serif;
     color: var(--text-color);
 }
+
 @media (min-width: 768px) {
     #categorySection {
         margin: 20px;
@@ -133,7 +151,10 @@ form {
     flex-direction: column;
     gap: 1rem;
     margin-bottom: 1rem;
+    width: 100%;
+    max-width: 100%;
 }
+
 @media (min-width: 768px) {
     form {
         padding: 1.5rem;
@@ -148,25 +169,72 @@ input, textarea {
     resize: none;
     font-size: 1rem;
     font-family: 'Arial Rounded MT', sans-serif;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 textarea {
     height: 100px;
 }
 
 button[type="submit"] {
-    background-color: var(--accent-color);
+    background: linear-gradient(135deg, var(--accent-color), #8c6745);
     color: white;
     border: none;
     padding: 0.8rem 1.2rem;
     font-size: 1rem;
     font-weight: bold;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(166, 124, 82, 0.3);
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(0);
 }
+
 button[type="submit"]:hover {
-    background-color: #815f42;
+    background: linear-gradient(135deg, #8c6745, var(--accent-color));
+    box-shadow: 0 8px 25px rgba(166, 124, 82, 0.4);
+    transform: translateY(-2px);
+}
+
+button[type="submit"]:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 2px 10px rgba(166, 124, 82, 0.3);
+}
+
+button[type="submit"]::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+button[type="submit"]:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+button[type="submit"]::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+button[type="submit"]:hover::after {
+    left: 100%;
 }
 #postContainer {
     margin-top: 2rem;
@@ -184,6 +252,11 @@ button:active {
     margin-bottom: 1.5rem;
     transition: transform 0.2s;
     color: var(--text-color);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 .post-card:hover {
     transform: scale(1.01);
@@ -229,15 +302,67 @@ button:active {
     margin-top: 0.5rem;
 }
 .react-btn {
-    background: none;
-    border: none;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border: 2px solid transparent;
+    border-radius: 12px;
     font-size: 1.2rem;
     margin-right: 0.5rem;
+    padding: 8px 12px;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
+
 .react-btn:hover {
-    transform: scale(1.2);
+    transform: translateY(-3px) scale(1.05);
+    border-color: var(--accent-color);
+    box-shadow: 0 8px 25px rgba(166, 124, 82, 0.2);
+    background: linear-gradient(135deg, rgba(166, 124, 82, 0.1), rgba(166, 124, 82, 0.05));
+}
+
+.react-btn:active {
+    transform: translateY(-1px) scale(1.1);
+    animation: heartbeat 0.6s ease-in-out;
+}
+
+@keyframes heartbeat {
+    0% { transform: translateY(-1px) scale(1.1); }
+    25% { transform: translateY(-3px) scale(1.15); }
+    50% { transform: translateY(-1px) scale(1.1); }
+    75% { transform: translateY(-3px) scale(1.15); }
+    100% { transform: translateY(-1px) scale(1.1); }
+}
+
+.react-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, var(--accent-color), transparent);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.react-btn:hover::before {
+    width: 100px;
+    height: 100px;
+    opacity: 0.1;
+}
+
+.react-btn:hover {
+    animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(-3px) scale(1.05); }
+    50% { transform: translateY(-6px) scale(1.05); }
 }
 .reply-section {
     margin-top: 1rem;
@@ -246,18 +371,68 @@ button:active {
 }
 .reply-input {
     width: 100%;
+    max-width: 100%;
     padding: 0.5rem;
     margin-bottom: 0.5rem;
     border-radius: var(--border-radius);
     border: 1px solid #ccc;
+    box-sizing: border-box;
 }
 .reply-submit {
-    background-color: var(--accent-color);
+    background: linear-gradient(135deg, var(--accent-color), #8c6745);
     color: white;
     border: none;
     padding: 0.4rem 1rem;
-    border-radius: var(--border-radius);
+    border-radius: 20px;
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(166, 124, 82, 0.3);
+}
+
+.reply-submit:hover {
+    background: linear-gradient(135deg, #8c6745, var(--accent-color));
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(166, 124, 82, 0.4);
+    border-radius: 25px;
+}
+
+.reply-submit:active {
+    transform: translateY(0) scale(0.95);
+    border-radius: 15px;
+}
+
+.reply-submit::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(45deg, var(--accent-color), #8c6745, var(--accent-color));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.reply-submit:hover::before {
+    opacity: 1;
+    animation: borderRotate 2s linear infinite;
+}
+
+@keyframes borderRotate {
+    0% { background: linear-gradient(45deg, var(--accent-color), #8c6745, var(--accent-color)); }
+    25% { background: linear-gradient(135deg, var(--accent-color), #8c6745, var(--accent-color)); }
+    50% { background: linear-gradient(225deg, var(--accent-color), #8c6745, var(--accent-color)); }
+    75% { background: linear-gradient(315deg, var(--accent-color), #8c6745, var(--accent-color)); }
+    100% { background: linear-gradient(45deg, var(--accent-color), #8c6745, var(--accent-color)); }
 }
 .reply-item {
     background-color: var(--card-bg);
@@ -268,6 +443,11 @@ button:active {
     box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.05), 0 2px 6px rgba(0, 0, 0, 0.1);
     border-radius: var(--border-radius);
     position: relative;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 .reply-item .delete-reply {
     position: absolute;
@@ -285,6 +465,7 @@ button:active {
 }
 .subreply-input {
     width: 90%;
+    max-width: 90%;
     margin-top: 6px;
     border: 1px solid var(--accent-color);
     background: var(--bg-color);
@@ -293,20 +474,62 @@ button:active {
     padding: 8px;
     font-size: 0.95rem;
     font-family: 'Playfair Display', serif;
+    box-sizing: border-box;
 }
 .subreply-submit {
-    background-color: var(--accent-color);
-    color: var(--bg-color);
+    background: linear-gradient(135deg, var(--accent-color), #8c6745);
+    color: white;
     border: none;
     padding: 6px 12px;
     margin-top: 6px;
     cursor: pointer;
-    font-family: 'Platfair Display', serif;
-    transition: all 0.2s ease;
+    font-family: 'Playfair Display', serif;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 600;
+    box-shadow: 0 3px 10px rgba(166, 124, 82, 0.3);
 }
+
 .subreply-submit:hover {
-    background-color: #8c6745;
-    color: #fff;
+    background: linear-gradient(135deg, #8c6745, var(--accent-color));
+    transform: translateY(-1px) scale(1.03);
+    box-shadow: 0 6px 20px rgba(166, 124, 82, 0.4);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.subreply-submit:active {
+    transform: translateY(0) scale(0.98);
+    animation: none;
+}
+
+@keyframes pulse {
+    0%, 100% { 
+        box-shadow: 0 6px 20px rgba(166, 124, 82, 0.4);
+        transform: translateY(-1px) scale(1.03);
+    }
+    50% { 
+        box-shadow: 0 8px 25px rgba(166, 124, 82, 0.6);
+        transform: translateY(-2px) scale(1.05);
+    }
+}
+
+.subreply-submit::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.subreply-submit:hover::after {
+    opacity: 1;
 }
 .subreply-list {
     margin-top: 10px;
@@ -341,11 +564,220 @@ button:active {
     transition: all 0.3s ease;
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
     cursor: pointer;
-    
+    max-width: 100%;
+    box-sizing: border-box;
 }
 #categorySelect:hover {
     background: var(--accent-color);
     color: var(--bg-color);
+}
+@media (max-width: 767px) {
+    body {
+        padding: 0.5rem;
+        width: 100vw;
+        max-width: 100vw;
+        overflow-x: hidden;
+        box-sizing: border-box;
+    }
+    
+    form, .post-card, .reply-item {
+        margin-left: 0;
+        margin-right: 0;
+        width: calc(100vw - 1rem);
+        max-width: calc(100vw - 1rem);
+        box-sizing: border-box;
+    }
+    
+    .toggle-switch {
+        right: 0.5rem;
+        top: 0.5rem;
+    }
+    
+    #categorySection {
+        margin: 10px 0;
+        padding: 0 0.5rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .subreply-section {
+        padding-left: 10px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .subreply-input {
+        width: calc(100% - 20px);
+        max-width: calc(100% - 20px);
+    }
+    
+    h1 {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        padding: 0 0.5rem;
+    }
+    
+    input, textarea, .reply-input {
+        width: calc(100% - 1rem);
+        max-width: calc(100% - 1rem);
+        margin: 0;
+    }
+}
+
+@keyframes particleBurst {
+    0% {
+        opacity: 1;
+        transform: scale(0) rotate(0deg);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.2) rotate(180deg);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.8) rotate(360deg);
+    }
+}
+
+@keyframes magneticPull {
+    0% { transform: translateY(-2px) scale(1.02); }
+    25% { transform: translateY(-4px) scale(1.03) rotateX(5deg); }
+    50% { transform: translateY(-3px) scale(1.04) rotateX(-2deg); }
+    75% { transform: translateY(-5px) scale(1.03) rotateX(3deg); }
+    100% { transform: translateY(-2px) scale(1.02) rotateX(0deg); }
+}
+
+@keyframes liquidMorph {
+    0%, 100% { border-radius: 8px; }
+    25% { border-radius: 20px 8px 20px 8px; }
+    50% { border-radius: 8px 20px 8px 20px; }
+    75% { border-radius: 15px; }
+}
+
+@keyframes glitch {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+}
+
+@keyframes neonPulse {
+    0%, 100% { 
+        box-shadow: 0 4px 15px rgba(166, 124, 82, 0.3),
+                    0 0 20px rgba(166, 124, 82, 0.1);
+    }
+    50% { 
+        box-shadow: 0 8px 25px rgba(166, 124, 82, 0.6),
+                    0 0 40px rgba(166, 124, 82, 0.3),
+                    inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+}
+
+@keyframes elasticBounce {
+    0% { transform: scale(1); }
+    20% { transform: scale(1.1, 0.9); }
+    40% { transform: scale(0.9, 1.1); }
+    60% { transform: scale(1.05, 0.95); }
+    80% { transform: scale(0.98, 1.02); }
+    100% { transform: scale(1); }
+}
+
+@keyframes colorWave {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+button[type="submit"]:hover {
+    background: linear-gradient(135deg, #8c6745, var(--accent-color));
+    background-size: 200% 200%;
+    animation: colorWave 3s ease infinite, magneticPull 2s ease-in-out infinite;
+    box-shadow: 0 8px 25px rgba(166, 124, 82, 0.4);
+    transform: translateY(-2px);
+}
+
+button[type="submit"]:focus {
+    animation: neonPulse 1.5s ease-in-out infinite;
+    outline: none;
+}
+
+button[type="submit"].clicked {
+    animation: elasticBounce 0.6s ease-out, liquidMorph 0.8s ease-in-out;
+}
+
+.react-btn.loved {
+    animation: heartbeat 0.6s ease-in-out, neonPulse 2s ease-in-out infinite;
+    background: linear-gradient(135deg, rgba(255, 182, 193, 0.3), rgba(255, 105, 180, 0.2));
+}
+
+.react-btn.disliked {
+    animation: glitch 0.3s ease-in-out;
+    background: linear-gradient(135deg, rgba(255, 99, 71, 0.2), rgba(220, 20, 60, 0.1));
+}
+
+.react-btn.hugged {
+    animation: elasticBounce 0.8s ease-out;
+    background: linear-gradient(135deg, rgba(147, 112, 219, 0.2), rgba(138, 43, 226, 0.1));
+}
+
+.button-loading {
+    position: relative;
+    color: transparent !important;
+    pointer-events: none;
+}
+
+.button-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid transparent;
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particleBurst 0.8s ease-out forwards;
+}
+
+.button-trail {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: rgba(166, 124, 82, 0.6);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: trailFade 1s ease-out forwards;
+}
+
+@keyframes trailFade {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
 }
 .sr-only {
     position: absolute;
@@ -358,23 +790,26 @@ button:active {
     white-space: nowrap;
     border: 0;
 }
+
 input:focus, textarea:focus, button:focus, select:focus {
     outline: 2px solid var(--accent-color);
     outline-offset: 2px;
 }
+
 @media (prefers-contrast: high) {
     :root {
         --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     }
+    
     .post-card {
         border: 2px solid var(--accent-color);
     }
 }
+
 @media (prefers-reduced-motion: reduce) {
     * {
-        animation-duration: 0.1ms !important;
+        animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
 }
-

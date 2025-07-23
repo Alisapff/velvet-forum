@@ -1,3 +1,155 @@
+function createParticles(element, count = 8) {
+    const rect = element.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    for (let i = 0; i < count; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = centerX + 'px';
+        particle.style.top = centerY + 'px';
+        
+        const angle = (Math.PI * 2 * i) / count;
+        const distance = 50 + Math.random() * 30;
+        const finalX = centerX + Math.cos(angle) * distance;
+        const finalY = centerY + Math.sin(angle) * distance;
+        
+        particle.style.setProperty('--final-x', finalX + 'px');
+        particle.style.setProperty('--final-y', finalY + 'px');
+        
+        document.body.appendChild(particle);
+        
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+            }
+        }, 800);
+        
+        requestAnimationFrame(() => {
+            particle.style.left = finalX + 'px';
+            particle.style.top = finalY + 'px';
+        });
+    }
+}
+
+function createTrail(x, y) {
+    const trail = document.createElement('div');
+    trail.className = 'button-trail';
+    trail.style.left = x + 'px';
+    trail.style.top = y + 'px';
+    document.body.appendChild(trail);
+    
+    setTimeout(() => {
+        if (trail.parentNode) {
+            trail.parentNode.removeChild(trail);
+        }
+    }, 1000);
+}
+
+function handleButtonClick(button, callback) {
+
+    button.classList.add('clicked');
+    
+    createParticles(button, 12);
+    
+    const originalText = button.textContent;
+    button.classList.add('button-loading');
+    
+    setTimeout(() => {
+        if (callback) callback();
+        
+        setTimeout(() => {
+            button.classList.remove('button-loading', 'clicked');
+        }, 1000);
+    }, 300);
+}
+
+function handleReactionClick(button, type) {
+    button.classList.remove('loved', 'disliked', 'hugged');
+    
+    switch(type) {
+        case 'love':
+            button.classList.add('loved');
+            createParticles(button, 6);
+            break;
+        case 'dislike':
+            button.classList.add('disliked');
+    
+            setTimeout(() => button.classList.remove('disliked'), 300);
+            break;
+        case 'hug':
+            button.classList.add('hugged');
+            createParticles(button, 10);
+            break;
+    }
+    
+  
+    setTimeout(() => {
+        button.classList.remove('loved', 'disliked', 'hugged');
+    }, 2000);
+}
+
+let isTrailActive = false;
+function activateButtonTrails() {
+    if (isTrailActive) return;
+    isTrailActive = true;
+    
+    document.addEventListener('mousemove', (e) => {
+        const hoveredButton = e.target.closest('button');
+        if (hoveredButton && Math.random() > 0.7) {
+            createTrail(e.clientX, e.clientY);
+        }
+    });
+}
+
+
+function initializeButtonEffects() {
+  
+    const submitButton = document.querySelector('button[type="submit"]');
+    if (submitButton) {
+        submitButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            handleButtonClick(submitButton, () => {
+                
+                const form = submitButton.closest('form');
+                if (form) {
+                    const event = new Event('submit', { bubbles: true, cancelable: true });
+                    form.dispatchEvent(event);
+                }
+            });
+        });
+    }
+    
+
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('react-btn')) {
+            const button = e.target;
+            const type = button.dataset.type;
+            
+            handleReactionClick(button, type);
+            
+            setTimeout(() => {
+            }, 100);
+        }
+    });
+    
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('reply-submit') || e.target.classList.contains('subreply-submit')) {
+            const button = e.target;
+            handleButtonClick(button, () => {
+            });
+        }
+    });
+    
+    activateButtonTrails();
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeButtonEffects);
+} else {
+    initializeButtonEffects();
+}
+
 const toggle = document.getElementById('darkModeToggle');
 toggle.addEventListener('change', () => {
     if (toggle.checked) {
@@ -22,7 +174,7 @@ categorySelect.addEventListener('change', () => {
 });
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp, getDocs, doc, deleteDoc, updateDoc, increment, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, serverTimestamp, getDocs, doc, deleteDoc, updateDoc, increment, query, orderBy, onSnapshot, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -38,6 +190,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
+let isAdmin = false;
 signInAnonymously(auth).catch(console.error);
 auth.onAuthStateChanged(user => {
     if (user && user.uid === "nl7EGGt1vvf7RolaPIAMdvxgbRn2") {
@@ -139,7 +292,7 @@ function renderPosts() {
             const userReactionRef = doc(db, "posts", postId, "reactions", user.uid);
 
             try {
-                const userReactionSnap = await getDocs(userReactionRef);
+                const userReactionSnap = await getDoc(userReactionRef);
                 const alreadyReacted = userReactionSnap.exists() && userReactionSnap.data()[type];
                 if (!alreadyReacted) {
                 await updateDoc(postRef, {
@@ -227,7 +380,7 @@ function renderPosts() {
                         subDiv.className = `subreply-item`;
                         subDiv.innerHTML = `
                         <p>↪${sub.content}</p>
-                        <small>${sub.createdAt?.toData().toLocaleString() ?? ''}</small>
+                        <small>${sub.createdAt?.toDate().toLocaleString() ?? ''}</small>
                         `;
                         container.appendChild(subDiv);
                     });
