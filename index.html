@@ -6,19 +6,20 @@
     <title>Velvet Forum</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/images/letter.png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
         <h1>Velvet Forum</h1>
 
-            <label class="toggle-switch">
-                <input type="checkbox" id="darkModeToggle">
+            <label class="toggle-switch" aria-label="Toggle dark mode">
+                <input type="checkbox" id="darkModeToggle" aria-label="Dark mode toggle">
                 <span class="slider"></span>
             </label>
 
         <div id="categorySection">
-            <h3>Choose category:</h3><br>
-            <select id="categorySelect">
+            <h3>Select a category:</h3><br>
+            <label for="categorySelect" class="sr-only">Category filter</label>
+            <select id="categorySelect" aria-label="Filter posts by category">
                 <option value="">All</option>
                 <option value="confession">Confessions</option>
                 <option value="question">Questions</option>
@@ -27,13 +28,15 @@
             </select>
             </div>
 
-        <form id="postForm">
-            <input id="title" placeholder="Post title" required />
-            <textarea id="content" placeholder="Write everything u wanna..." required></textarea>
+        <form id="postForm" aria-label="Create new post">
+            <label for="title" class="sr-only">Post title</label>
+            <input id="title" placeholder="Post title" required aria-required="true"/>
+            <label for="content" class="sr-only">Post content</label> 
+            <textarea id="content" placeholder="Write everything u want..." required aria-required="true"></textarea>
             <button type="submit">Post</button>
         </form>
 
-        <div id="postContainer"></div>
+        <div id="postContainer" role="main" aria-label="Forum posts"></div>
         
 <script type="module" src="script.js"></script>
 </body>
